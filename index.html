@@ -30,14 +30,60 @@
     .open {
       font-style: italic;
     }
+    @media (max-width: 650px) {
+      h1 {
+        font-size: 48px
+      }
+      main {
+        padding: 50px 20px
+      }
+    }
+
+    @media (max-width: 470px) {
+      h1 {
+        font-size: 38px
+      }
+      main {
+        padding: 50px 20px
+      }
+
+      img {
+        width: 300px
+      }
+
+      .open {
+        font-size: 15px
+      }
+    }
   </style>
 </head>
 <body>
   <main>
     <img src="https://uwcconnect.com/wp-content/themes/FinurligTema/grafikk/UWC-logo-kvit.png" alt="UWC Connect Logo">
     <h1>We are currently under scheduled maintenance.</h1>
-    <p class="message">We are fixing some issues and will be back shortly!</p>
-    <p class="open">Expected return time: 04/01/2024 at 10:00</p>
+    <p class="message" id="message"></p>
+    <p class="open">Scheduled end time: <span id="end_time"></span> CET</p>
   </main>
+  <script>
+    fetch('https://w841yjxynxqn.statuspage.io/api/v2/scheduled-maintenances/active.json')
+      .then(x => x.json())
+      .then(data => {
+        const end_time = document.getElementById('end_time');
+        const message = document.getElementById('message');
+
+        if (data.scheduled_maintenances.length)  {
+          end_time.textContent = new Intl.DateTimeFormat('en-GB', {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+            timeZone: 'Europe/Oslo',
+          }).format(new Date(data.scheduled_maintenances[0].scheduled_until));
+
+          message.textContent = data.scheduled_maintenances[0].incident_updates.pop().body
+        } else  {
+          end_time.textContent = ''
+          message.textContent = 'We are working hard to get the website back soon!'
+        }
+      });
+  </script>
 </body>
 </html>
