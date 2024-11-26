@@ -78,7 +78,7 @@
             timeZone: 'Europe/Oslo',
           }).format(new Date(data.scheduled_maintenances[0].scheduled_until));
 
-          message.textContent = data.scheduled_maintenances[0].incident_updates.pop().body
+          message.textContent = data.scheduled_maintenances[0].incident_updates[0].body
         } else  {
           end_time.textContent = ''
           message.textContent = 'We are working hard to get the website back soon!'
