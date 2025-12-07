@@ -61,29 +61,10 @@
   <main>
     <img src="https://uwcconnect.com/wp-content/themes/FinurligTema/grafikk/UWC-logo-kvit.png" alt="UWC Connect Logo">
     <h1>We are currently under scheduled maintenance.</h1>
-    <p class="message" id="message"></p>
-    <p class="open">Scheduled end time: <span id="end_time"></span> CET</p>
+    <p class="message" id="message">We are currently upgrading our website, and due to this we have closed all bookings. Please come back again later!</p>
+    <p class="open">Scheduled end time: <span id="end_time">15:00</span> CET</p>
   </main>
   <script>
-    fetch('https://w841yjxynxqn.statuspage.io/api/v2/scheduled-maintenances/active.json')
-      .then(x => x.json())
-      .then(data => {
-        const end_time = document.getElementById('end_time');
-        const message = document.getElementById('message');
-
-        if (data.scheduled_maintenances.length)  {
-          end_time.textContent = new Intl.DateTimeFormat('en-GB', {
-            dateStyle: 'medium',
-            timeStyle: 'short',
-            timeZone: 'Europe/Oslo',
-          }).format(new Date(data.scheduled_maintenances[0].scheduled_until));
-
-          message.textContent = data.scheduled_maintenances[0].incident_updates[0].body
-        } else  {
-          end_time.textContent = ''
-          message.textContent = 'We are working hard to get the website back soon!'
-        }
-      });
   </script>
 </body>
 </html>
